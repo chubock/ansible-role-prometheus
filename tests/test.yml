@@ -1,0 +1,17 @@
+---
+- hosts: prometheus
+  become: yes
+  roles:
+    - { role: chubock.prometheus}
+  vars:
+    jobs:
+      mongo:
+        targets:
+          - mongodb1.local:9001
+          - mongodb2.local:9001
+      elasticsearch:
+        targets:
+          - es1.local:9114
+          - es2.local:9114
+          - es3.local:9114
+        scrape_interval: 30s

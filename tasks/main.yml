@@ -1,0 +1,42 @@
+---
+- name: check tar installation
+  apt:
+    name: tar
+
+- name: check {{ prometheus_path }} directory existense
+  file:
+    path: '{{ prometheus_path }}'
+    state: directory
+
+- name: check {{ prometheus_path }}/data directory existense
+  file:
+    path: '{{ prometheus_path }}/data'
+    state: directory
+
+- name: unarchive package
+  unarchive:
+    src: '{{ prometheus_url}}'
+    dest: '{{ prometheus_path }}'
+    copy: false
+    extra_opts:
+      - --strip-components=1
+    creates: '{{ prometheus_path }}/prometheus'
+
+- name: updating prometheus.service systemd file
+  template:
+    src: '{{ prometheus_config_template }}'
+    dest: '{{prometheus_path}}/prometheus.yml'
+    trim_blocks: no
+  notify: restart prometheus service
+
+- name: updating prometheus.service systemd file
+  template:
+    src: '{{ prometheus_service_template }}'
+    dest: /lib/systemd/system/prometheus.service
+  notify: restart prometheus service
+
+- name: enabling and starting prometheus service
+  systemd:
+    name: prometheus
+    state: started
+    enabled: yes

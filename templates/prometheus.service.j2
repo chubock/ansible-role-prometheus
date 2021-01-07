@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus Server
+Documentation=https://prometheus.io/docs/introduction/overview/
+After=network-online.target
+
+[Service]
+ExecStart={{ prometheus_path }}/prometheus --config.file={{ prometheus_path }}/prometheus.yml --storage.tsdb.path={{ prometheus_path }}/data
+
+[Install]
+WantedBy=multi-user.target

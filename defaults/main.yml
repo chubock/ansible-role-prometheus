@@ -1,0 +1,8 @@
+---
+prometheus_path: /var/lib/prometheus
+prometheus_url: "https://github.com/prometheus/prometheus/releases/download/v2.23.0/prometheus-2.23.0.linux-amd64.tar.gz"
+prometheus_config_template: prometheus.yml.j2
+prometheus_service_template: prometheus.service.j2
+
+global_scrape_interval: 10s
+global_evaluation_interval: 10s
