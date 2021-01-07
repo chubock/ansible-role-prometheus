@@ -25,7 +25,7 @@
 - name: updating prometheus.service systemd file
   template:
     src: '{{ prometheus_config_template }}'
-    dest: '{{prometheus_path }}/prometheus.yml'
+    dest: '{{ prometheus_path }}/prometheus.yml'
     trim_blocks: no
   notify: restart prometheus service
 
